@@ -11,23 +11,25 @@ body{margin:0;background:#111;color:#f2f2f2;font-family:system-ui,Tahoma,sans-se
 header{position:sticky;top:0;z-index:5;display:flex;gap:8px;align-items:center;padding:10px 12px;background:#1a1a1a;border-bottom:1px solid #2a2a2a}
 .rd{width:38px;height:38px;border-radius:50%;background:#2a2a2c;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;font-size:19px;flex-shrink:0}
 .rd.on{color:#f5b301}
-.bd{position:absolute;top:-2px;left:-2px;background:#e5484d;color:#fff;font-size:10px;border-radius:8px;padding:0 5px}
-.sb{flex:1;background:#2a2a2c;border-radius:20px;height:38px;display:flex;align-items:center;gap:6px;padding:0 12px;color:#9a9a9a;cursor:pointer}
+.bd{position:absolute;top:-2px;inset-inline-end:-2px;background:#e5484d;color:#fff;font-size:10px;border-radius:8px;padding:0 5px}
+.sb{flex:1;min-width:0;background:#2a2a2c;border-radius:20px;height:38px;display:flex;align-items:center;gap:6px;padding:0 12px;color:#9a9a9a;cursor:pointer;white-space:nowrap;overflow:hidden}
 main{padding:12px 12px 110px;max-width:640px;margin:auto}
 nav{position:fixed;bottom:10px;left:10px;right:10px;max-width:620px;margin:auto;display:flex;gap:4px;padding:6px;background:#1c1c1ee6;backdrop-filter:blur(12px);border:1px solid #2a2a2a;border-radius:30px;z-index:6}
+html[dir=ltr] nav{flex-direction:row-reverse}
 .nb{flex:1;text-align:center;padding:7px 0;border-radius:22px;color:#9a9a9a;font-size:11px;cursor:pointer}
 .nb i{display:block;font-size:22px}
 .nb.on{background:#2c2c2e;color:#3b82f6}
 .bn{overflow:hidden;border-radius:16px;direction:ltr}
 .trk{display:flex;transition:transform .5s}
 .sl{flex:0 0 100%;height:160px;position:relative;direction:rtl;background:#26215c;display:flex;align-items:flex-end;color:#fff;text-decoration:none;overflow:hidden}
+html[dir=ltr] .sl{direction:ltr}
 .sl img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .bt{position:relative;width:100%;padding:28px 14px 12px;background:linear-gradient(transparent,#000000cc)}
 .bt b{display:block;font-size:17px}.bt span{font-size:13px;color:#ddd}
 .dots{display:flex;justify-content:center;gap:6px;margin-top:8px}
 .dots i{width:6px;height:6px;border-radius:50%;background:#444;cursor:pointer}.dots i.on{background:#3b82f6}
 .sec{display:flex;justify-content:space-between;align-items:center;margin:20px 0 10px}
-.sec b{font-size:16px;font-weight:600}.sec a{font-size:13px;color:#9a9a9a;cursor:pointer}
+.sec b{font-size:16px;font-weight:600}.sec b>i{margin-inline-end:6px}.sec a{font-size:13px;color:#9a9a9a;cursor:pointer}
 .hs{display:flex;gap:12px;overflow-x:auto;padding-bottom:4px}
 .t{width:72px;flex-shrink:0;text-align:center;font-size:12px;cursor:pointer}
 .t .n{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:4px}
@@ -45,7 +47,8 @@ nav{position:fixed;bottom:10px;left:10px;right:10px;max-width:620px;margin:auto;
 .chip{padding:7px 14px;border-radius:18px;background:#2a2a2c;white-space:nowrap;cursor:pointer;font-size:13px}
 .chip.on{background:#3b82f6}
 .cg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.cc,.lk{padding:14px;border-radius:12px;background:#1c1c1e;cursor:pointer;display:flex;align-items:center;gap:8px;color:#f2f2f2;text-decoration:none}
+.cc,.lk{padding:14px;border-radius:12px;background:#1c1c1e;cursor:pointer;display:flex;align-items:center;gap:8px;color:#f2f2f2;text-decoration:none;border:1px solid transparent}
+.cc.on{border-color:#3b82f6}
 .blue{background:#3b82f6;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px}
 .mut{color:#9a9a9a;font-size:13px}
 .nt{display:flex;gap:10px;padding:12px;background:#1c1c1e;border-radius:12px;margin-bottom:8px}
@@ -59,7 +62,7 @@ nav{position:fixed;bottom:10px;left:10px;right:10px;max-width:620px;margin:auto;
 .stats{display:flex;overflow-x:auto;border-bottom:1px solid #222;padding:14px 0;scrollbar-width:none}
 .stats::-webkit-scrollbar{display:none}
 .stats div{flex:1 0 auto;min-width:84px;text-align:center;padding:0 10px;font-size:15px}
-.stats div+div{border-right:1px solid #2a2a2a}
+.stats div+div{border-inline-start:1px solid #2a2a2a}
 .stats small{display:block;color:#9a9a9a;font-size:11px;margin-bottom:6px}
 .shots{display:flex;gap:10px;overflow-x:auto}
 .shots img{height:280px;border-radius:14px;flex-shrink:0;background:#1c1c1e}
@@ -78,16 +81,17 @@ h3{margin:0 0 6px}
 <body>
 <header id="hd">
  <div class="rd" data-a="nav" data-x="notif" aria-label="notifications"><i class="ti ti-bell"></i><span class="bd" id="bd" style="display:none"></span></div>
- <div class="sb" data-a="nav" data-x="search"><i class="ti ti-search"></i><span>یاری، بەرنامە، هتد</span></div>
+ <div class="sb" data-a="nav" data-x="search"><i class="ti ti-search"></i><span data-t="sph"></span></div>
+ <div class="rd" data-a="nav" data-x="lang" aria-label="language"><i class="ti ti-language"></i></div>
  <div class="rd" data-a="nav" data-x="admin" aria-label="admin"><i class="ti ti-user"></i></div>
 </header>
 <main id="main"></main>
 <nav id="nav">
- <div class="nb" data-a="nav" data-x="search"><i class="ti ti-search"></i>گەڕان</div>
- <div class="nb" data-a="nav" data-x="more"><i class="ti ti-menu-2"></i>زیاتر</div>
- <div class="nb" data-a="nav" data-x="fav"><i class="ti ti-star"></i>تایبەت</div>
- <div class="nb" data-a="nav" data-x="apps"><i class="ti ti-layout-grid"></i>ئەپەکان</div>
- <div class="nb" data-a="nav" data-x="home"><i class="ti ti-home"></i>ماڵەوە</div>
+ <div class="nb" data-a="nav" data-x="search"><i class="ti ti-search"></i><span data-t="n_search"></span></div>
+ <div class="nb" data-a="nav" data-x="more"><i class="ti ti-menu-2"></i><span data-t="n_more"></span></div>
+ <div class="nb" data-a="nav" data-x="fav"><i class="ti ti-star"></i><span data-t="n_fav"></span></div>
+ <div class="nb" data-a="nav" data-x="apps"><i class="ti ti-layout-grid"></i><span data-t="n_apps"></span></div>
+ <div class="nb" data-a="nav" data-x="home"><i class="ti ti-home"></i><span data-t="n_home"></span></div>
 </nav>
 <div class="toast" id="toast"></div>
 
@@ -98,15 +102,71 @@ import {getFirestore,collection,addDoc,setDoc,updateDoc,deleteDoc,doc,onSnapshot
 import {getAuth,signInWithEmailAndPassword,signInAnonymously,signOut,onAuthStateChanged}
  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-// ١. firebaseConfig ی خۆت لێرە دابنێ
-
 const firebaseConfig={apiKey:"AIzaSyCyCZ2xcRwETnlnaVjf-ZajOpHGktfgPG0",authDomain:"emapp-97eff.firebaseapp.com",projectId:"emapp-97eff",storageBucket:"emapp-97eff.firebasestorage.app",messagingSenderId:"613299423776",appId:"1:613299423776:web:e82587f3a26683c496ca45"};
 
-// ٢. لینکە کۆمەڵایەتییەکانت لێرە بگۆڕە
+// لینکە کۆمەڵایەتییەکانت لێرە بگۆڕە
 const LINKS=[["ti-brand-instagram","Instagram","https://instagram.com/"],["ti-brand-telegram","Telegram","https://t.me/"],
  ["ti-brand-snapchat","Snapchat","https://snapchat.com/"],["ti-brand-whatsapp","WhatsApp","https://wa.me/"],
  ["ti-brand-tiktok","TikTok","https://tiktok.com/"],["ti-brand-facebook","Facebook","https://facebook.com/"]];
+
+// بەشەکان لە داتابەیس بە کوردی هەڵدەگیرێن، بۆیە ئەمانە وەک خۆیان بمێننەوە
 const CATS=["هەموو","یاری","ئامراز","کۆمەڵایەتی","خوێندن","وێنە"];
+
+/* ===== وەرگێڕان ===== */
+const I18N={
+ckb:{
+ sph:"یاری، بەرنامە، هتد",n_search:"گەڕان",n_more:"زیاتر",n_fav:"تایبەت",n_apps:"ئەپەکان",n_home:"ماڵەوە",
+ welcome:"بەخێربێیت بۆ EM App",welcomeSub:"باشترین ئەپەکان لە یەک شوێن",
+ newest:"نوێترین ئەپەکان",best:"باشترینەکان",recent:"بەم دواییە",all:"گشت",
+ noApps:"هێشتا ئەپ زیاد نەکراوە",noAppsFound:"هیچ ئەپێک نییە",noRatings:"هێشتا هەڵسەنگاندن نییە",
+ get:"وەرگرتن",again:"دووبارە",share:"هاوبەشکردن",noLink:"لینک نییە",
+ ver:"وەشان",size:"قەبارە",type:"جۆر",rating:"هەڵسەنگاندن",updated:"نوێکراوەتەوە",today:"ئەمڕۆ",
+ about:"دەربارە",shots:"وێنەکان",rateIt:"ئەم ئەپە هەڵبسەنگێنە",yourRate:n=>`هەڵسەنگاندنی تۆ: ${n} لە ٥`,nRatings:n=>`${n} هەڵسەنگاندن`,
+ like:"لەوانەیە ئەمانەشت بەدڵبێت",sortNew:"نوێترین",sortTop:"باشترین هەڵسەنگاندن",
+ favTitle:"تایبەت",favEmpty:"ئەستێرە لەسەر ئەپێک دابنێ بۆ زیادکردنی",
+ social:"تۆڕەکانمان",language:"زمان",searchPh2:"گەڕان بۆ ئەپ...",sections:"بەشەکان",noResults:"هیچ ئەپێک نەدۆزرایەوە",
+ notifTitle:"ئاگادارکردنەوەکان",notifNone:"ئاگادارکردنەوە نییە",
+ copied:"لینک کۆپی کرا",thanks:"سوپاس بۆ هەڵسەنگاندنەکەت",wait:"چاوەڕێ بکە و دووبارە هەوڵ بدەرەوە",notFound:"ئەپەکە نەدۆزرایەوە",
+ cats:{"هەموو":"هەموو","یاری":"یاری","ئامراز":"ئامراز","کۆمەڵایەتی":"کۆمەڵایەتی","خوێندن":"خوێندن","وێنە":"وێنە"}
+},
+en:{
+ sph:"Games, apps, etc.",n_search:"Search",n_more:"More",n_fav:"Favorites",n_apps:"Apps",n_home:"Home",
+ welcome:"Welcome to EM App",welcomeSub:"The best apps in one place",
+ newest:"Newest apps",best:"Top rated",recent:"Recently added",all:"See all",
+ noApps:"No apps added yet",noAppsFound:"No apps found",noRatings:"No ratings yet",
+ get:"Get",again:"Again",share:"Share",noLink:"No link",
+ ver:"Version",size:"Size",type:"Category",rating:"Rating",updated:"Updated",today:"Today",
+ about:"About",shots:"Screenshots",rateIt:"Rate this app",yourRate:n=>`Your rating: ${n} of 5`,nRatings:n=>`${n} ratings`,
+ like:"You might also like",sortNew:"Newest",sortTop:"Top rated",
+ favTitle:"Favorites",favEmpty:"Tap the star on an app to add it here",
+ social:"Our networks",language:"Language",searchPh2:"Search for an app...",sections:"Categories",noResults:"No apps found",
+ notifTitle:"Notifications",notifNone:"No notifications",
+ copied:"Link copied",thanks:"Thanks for your rating",wait:"Please wait and try again",notFound:"App not found",
+ cats:{"هەموو":"All","یاری":"Games","ئامراز":"Tools","کۆمەڵایەتی":"Social","خوێندن":"Education","وێنە":"Photo"}
+},
+ar:{
+ sph:"ألعاب، تطبيقات، إلخ",n_search:"بحث",n_more:"المزيد",n_fav:"المفضلة",n_apps:"التطبيقات",n_home:"الرئيسية",
+ welcome:"مرحباً بك في EM App",welcomeSub:"أفضل التطبيقات في مكان واحد",
+ newest:"أحدث التطبيقات",best:"الأعلى تقييماً",recent:"أُضيف مؤخراً",all:"عرض الكل",
+ noApps:"لم تتم إضافة تطبيقات بعد",noAppsFound:"لا توجد تطبيقات",noRatings:"لا توجد تقييمات بعد",
+ get:"تحميل",again:"مرة أخرى",share:"مشاركة",noLink:"لا يوجد رابط",
+ ver:"الإصدار",size:"الحجم",type:"الفئة",rating:"التقييم",updated:"آخر تحديث",today:"اليوم",
+ about:"حول التطبيق",shots:"لقطات الشاشة",rateIt:"قيّم هذا التطبيق",yourRate:n=>`تقييمك: ${n} من 5`,nRatings:n=>`${n} تقييم`,
+ like:"قد يعجبك أيضاً",sortNew:"الأحدث",sortTop:"الأعلى تقييماً",
+ favTitle:"المفضلة",favEmpty:"اضغط على النجمة بجانب أي تطبيق لإضافته هنا",
+ social:"حساباتنا",language:"اللغة",searchPh2:"ابحث عن تطبيق...",sections:"الأقسام",noResults:"لم يتم العثور على تطبيقات",
+ notifTitle:"الإشعارات",notifNone:"لا توجد إشعارات",
+ copied:"تم نسخ الرابط",thanks:"شكراً على تقييمك",wait:"انتظر وحاول مرة أخرى",notFound:"التطبيق غير موجود",
+ cats:{"هەموو":"الكل","یاری":"ألعاب","ئامراز":"أدوات","کۆمەڵایەتی":"تواصل اجتماعي","خوێندن":"تعليم","وێنە":"صور"}
+}};
+let lang=localStorage.getItem("em_lang")||"ckb";if(!I18N[lang])lang="ckb";
+const T=k=>{const v=I18N[lang][k];return v===undefined?I18N.ckb[k]:v};
+const cn=c=>I18N[lang].cats[c]||c;
+function applyStatic(){
+ const h=document.documentElement;h.lang=lang;h.dir=lang==="en"?"ltr":"rtl";
+ document.querySelectorAll("[data-t]").forEach(e=>e.textContent=T(e.dataset.t));
+}
+function setLang(l){lang=l;localStorage.setItem("em_lang",l);applyStatic();draw()}
 
 const fb=initializeApp(firebaseConfig),db=getFirestore(fb),auth=getAuth(fb);
 const LS=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};
@@ -134,51 +194,56 @@ const icon=a=>url(a.icon)?`<img class="ic" src="${esc(a.icon)}" alt="">`:
 const tile=a=>`<div class="t" data-a="open" data-x="${a.id}">${icon(a)}<div class="n">${esc(a.name)}</div></div>`;
 const rtile=a=>`<div class="t" data-a="open" data-x="${a.id}">${icon(a)}<div class="n">${esc(a.name)}</div><div class="rt">★ ${rt(a.id).avg.toFixed(1)}</div></div>`;
 const row=a=>`<div class="li" data-a="open" data-x="${a.id}">${icon(a)}<div class="g"><b>${esc(a.name)}</b><small>${esc(a.desc)}</small>
- <span class="tag">${esc(a.cat)}</span>${rt(a.id).n?`<span class="rt"> ★ ${rt(a.id).avg.toFixed(1)}</span>`:""}</div>
+ <span class="tag">${esc(cn(a.cat))}</span>${rt(a.id).n?`<span class="rt"> ★ ${rt(a.id).avg.toFixed(1)}</span>`:""}</div>
  <i class="ti ti-star star ${favs.includes(a.id)?"on":""}" data-a="fav" data-x="${a.id}"></i>
- ${url(a.link)?`<a class="gt" data-got="${a.id}" href="${esc(a.link)}" target="_blank" rel="noopener">${gots.includes(a.id)?"دووبارە":"وەرگرتن"}</a>`:""}</div>`;
-const sec=(t,i,go)=>`<div class="sec"><b><i class="ti ${i}" style="margin-left:6px"></i>${t}</b><a data-a="nav" data-x="${go}">گشت</a></div>`;
-const fdate=a=>{const t=(a.upd||a.created)?.toDate?.();if(!t)return "—";return t.toDateString()===new Date().toDateString()?"ئەمڕۆ":t.toLocaleDateString("en-GB")};
+ ${url(a.link)?`<a class="gt" data-got="${a.id}" href="${esc(a.link)}" target="_blank" rel="noopener">${gots.includes(a.id)?T("again"):T("get")}</a>`:""}</div>`;
+const sec=(t,i,go)=>`<div class="sec"><b><i class="ti ${i}"></i>${t}</b><a data-a="nav" data-x="${go}">${T("all")}</a></div>`;
+const fdate=a=>{const t=(a.upd||a.created)?.toDate?.();if(!t)return "—";return t.toDateString()===new Date().toDateString()?T("today"):t.toLocaleDateString("en-GB")};
+const backIcon=()=>`<i class="ti ti-arrow-${lang==="en"?"left":"right"}"></i>`;
 
 const slide=b=>{
  const inner=`${url(b.img)?`<img src="${esc(b.img)}" alt="">`:""}<div class="bt"><b>${esc(b.title)}</b><span>${esc(b.sub)}</span></div>`;
  return url(b.link)?`<a class="sl" href="${esc(b.link)}" target="_blank" rel="noopener">${inner}</a>`:`<div class="sl">${inner}</div>`;
 };
 const hero=()=>{
- const list=banners.length?banners:[{title:"بەخێربێیت بۆ EM App",sub:"باشترین ئەپەکان لە یەک شوێن"}];
+ const list=banners.length?banners:[{title:T("welcome"),sub:T("welcomeSub")}];
  return `<div class="bn"><div class="trk" id="trk">${list.map(slide).join("")}</div></div>`+
   (list.length>1?`<div class="dots" id="dots">${list.map((_,i)=>`<i data-a="slide" data-x="${i}"></i>`).join("")}</div>`:"");
 };
 
 function detailPage(){
  const a=apps.find(x=>x.id===curApp);
- if(!a)return `<div class="rd" data-a="back"><i class="ti ti-arrow-right"></i></div>`+empty("ئەپەکە نەدۆزرایەوە");
+ if(!a)return `<div class="rd" data-a="back">${backIcon()}</div>`+empty(T("notFound"));
  const shots=String(a.shots||"").split(/[\s,]+/).filter(url);
  const more=apps.filter(x=>x.id!==a.id).sort((x,y)=>(y.cat===a.cat)-(x.cat===a.cat)).slice(0,8);
  const r=rt(a.id),my=mine(a.id),got=gots.includes(a.id)&&url(a.link);
  return `<div class="hero" style="background:hsl(${hue(a)} 35% 18%)">
   ${url(a.cover)?`<img class="cv" src="${esc(a.cover)}" alt="">`:""}
-  <div class="rd" data-a="back" aria-label="back"><i class="ti ti-arrow-right"></i></div>
+  <div class="rd" data-a="back" aria-label="back">${backIcon()}</div>
   <div class="rd ${favs.includes(a.id)?"on":""}" data-a="fav" data-x="${a.id}" aria-label="bookmark"><i class="ti ti-bookmark"></i></div></div>
  <div class="dtop">${icon(a)}<div class="g"><h2>${esc(a.name)}</h2>
   <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-   ${url(a.link)?`<a class="gt" data-got="${a.id}" href="${esc(a.link)}" target="_blank" rel="noopener">وەرگرتن</a>`:`<span class="mut">لینک نییە</span>`}
-   ${got?`<a class="gt s2" href="${esc(a.link)}" target="_blank" rel="noopener">دووبارە</a>`:""}
-   <button class="gt s2" data-a="share" data-x="${a.id}">هاوبەشکردن</button>
-   <span class="tag">${esc(a.cat)}</span></div></div></div>
- <div class="stats"><div><small>وەشان</small>${esc(a.ver||"—")}</div><div><small>قەبارە</small>${esc(a.size||"—")}</div>
-  <div><small>جۆر</small>${esc(a.cat)}</div><div><small>هەڵسەنگاندن</small>${r.n?r.avg.toFixed(1)+" ★":"—"}</div>
-  <div><small>نوێکراوەتەوە</small>${fdate(a)}</div></div>
- <div class="sec"><b class="mut" style="font-weight:400">دەربارە</b></div><div class="desc">${esc(a.desc||"")}</div>
- ${shots.length?`<div class="sec"><b>وێنەکان</b></div><div class="shots">${shots.map(s=>`<img src="${esc(s)}" alt="" loading="lazy">`).join("")}</div>`:""}
- <div class="sec"><b>هەڵسەنگاندن</b></div>
- <div class="rate"><div class="big">${r.n?r.avg.toFixed(1):"—"}</div><div><div class="stz">${stz(r.avg)}</div><div class="mut">${r.n?r.n+" هەڵسەنگاندن":"هێشتا هەڵسەنگاندن نییە"}</div></div></div>
- <div class="mut" style="text-align:center">${my?"هەڵسەنگاندنی تۆ: "+my+" لە ٥":"ئەم ئەپە هەڵبسەنگێنە"}</div>
+   ${url(a.link)?`<a class="gt" data-got="${a.id}" href="${esc(a.link)}" target="_blank" rel="noopener">${T("get")}</a>`:`<span class="mut">${T("noLink")}</span>`}
+   ${got?`<a class="gt s2" href="${esc(a.link)}" target="_blank" rel="noopener">${T("again")}</a>`:""}
+   <button class="gt s2" data-a="share" data-x="${a.id}">${T("share")}</button>
+   <span class="tag">${esc(cn(a.cat))}</span></div></div></div>
+ <div class="stats"><div><small>${T("ver")}</small>${esc(a.ver||"—")}</div><div><small>${T("size")}</small>${esc(a.size||"—")}</div>
+  <div><small>${T("type")}</small>${esc(cn(a.cat))}</div><div><small>${T("rating")}</small>${r.n?r.avg.toFixed(1)+" ★":"—"}</div>
+  <div><small>${T("updated")}</small>${fdate(a)}</div></div>
+ <div class="sec"><b class="mut" style="font-weight:400">${T("about")}</b></div><div class="desc">${esc(a.desc||"")}</div>
+ ${shots.length?`<div class="sec"><b>${T("shots")}</b></div><div class="shots">${shots.map(s=>`<img src="${esc(s)}" alt="" loading="lazy">`).join("")}</div>`:""}
+ <div class="sec"><b>${T("rating")}</b></div>
+ <div class="rate"><div class="big">${r.n?r.avg.toFixed(1):"—"}</div><div><div class="stz">${stz(r.avg)}</div><div class="mut">${r.n?T("nRatings")(r.n):T("noRatings")}</div></div></div>
+ <div class="mut" style="text-align:center">${my?T("yourRate")(my):T("rateIt")}</div>
  <div class="pick">${[1,2,3,4,5].map(i=>`<span data-a="rate" data-x="${a.id}:${i}">${i<=my?"★":"☆"}</span>`).join("")}</div>
- ${more.length?`<div class="sec"><b>لەوانەیە ئەمانەشت بەدڵبێت</b><a data-a="nav" data-x="apps">گشت</a></div><div class="hs">${more.map(tile).join("")}</div>`:""}`;
+ ${more.length?`<div class="sec"><b>${T("like")}</b><a data-a="nav" data-x="apps">${T("all")}</a></div><div class="hs">${more.map(tile).join("")}</div>`:""}`;
 }
+
+/* ئادمین (بە کوردی دەمێنێتەوە) */
 function adminPage(){
- return `<h3 id="ft">زیادکردنی ئەپ</h3>
+ return `<h3>پڕکردنەوەی خۆکار لە App Store</h3>
+ <input id="asl" dir="ltr" placeholder="لینکی App Store لێرە دابنێ"><button class="gt s2" style="margin-top:8px" data-a="fetchapp">پڕکردنەوەی خۆکار</button><div class="err" id="afe"></div>
+ <h3 id="ft" style="margin-top:22px">زیادکردنی ئەپ</h3>
  <input id="n" placeholder="ناوی ئەپ"><select id="c">${CATS.slice(1).map(c=>`<option>${c}</option>`).join("")}</select>
  <textarea id="d" rows="3" placeholder="وەسف"></textarea>
  <input id="ver" placeholder="وەشان (نموونە: 1.2.0)"><input id="size" placeholder="قەبارە (نموونە: 85 MB)">
@@ -205,25 +270,28 @@ const loginPage=()=>`<h3>چوونەژوورەوەی ئادمین</h3><input id="
 
 function page(){
  if(v==="home")return hero()+
-  sec("نوێترین ئەپەکان","ti-flame","apps")+(apps.length?`<div class="hs">${apps.slice(0,8).map(tile).join("")}</div>`:empty("هێشتا ئەپ زیاد نەکراوە"))+
-  (best().length?sec("باشترینەکان","ti-trophy","top")+`<div class="hs">${best().slice(0,8).map(rtile).join("")}</div>`:"")+
-  sec("بەم دواییە","ti-history","apps")+apps.slice(0,5).map(row).join("");
+  sec(T("newest"),"ti-flame","apps")+(apps.length?`<div class="hs">${apps.slice(0,8).map(tile).join("")}</div>`:empty(T("noApps")))+
+  (best().length?sec(T("best"),"ti-trophy","top")+`<div class="hs">${best().slice(0,8).map(rtile).join("")}</div>`:"")+
+  sec(T("recent"),"ti-history","apps")+apps.slice(0,5).map(row).join("");
  if(v==="detail")return detailPage();
- if(v==="top")return `<h3>باشترینەکان</h3>`+(best().map(row).join("")||empty("هێشتا هەڵسەنگاندن نییە"));
+ if(v==="top")return `<h3>${T("best")}</h3>`+(best().map(row).join("")||empty(T("noRatings")));
  if(v==="apps"){
   let l=apps.filter(a=>cat==="هەموو"||a.cat===cat);
   if(sortBy==="top")l=l.slice().sort((x,y)=>score(y)-score(x));
-  return `<div class="chips">${CATS.map(c=>`<div class="chip ${c===cat?"on":""}" data-a="cat" data-x="${c}">${c}</div>`).join("")}</div>
-  <div class="chips"><div class="chip ${sortBy==="new"?"on":""}" data-a="sort" data-x="new">نوێترین</div>
-  <div class="chip ${sortBy==="top"?"on":""}" data-a="sort" data-x="top">باشترین هەڵسەنگاندن</div></div>`+(l.map(row).join("")||empty("هیچ ئەپێک نییە"));
+  return `<div class="chips">${CATS.map(c=>`<div class="chip ${c===cat?"on":""}" data-a="cat" data-x="${c}">${cn(c)}</div>`).join("")}</div>
+  <div class="chips"><div class="chip ${sortBy==="new"?"on":""}" data-a="sort" data-x="new">${T("sortNew")}</div>
+  <div class="chip ${sortBy==="top"?"on":""}" data-a="sort" data-x="top">${T("sortTop")}</div></div>`+(l.map(row).join("")||empty(T("noAppsFound")));
  }
- if(v==="fav")return `<h3>تایبەت</h3>`+(apps.filter(a=>favs.includes(a.id)).map(row).join("")||empty("ئەستێرە لەسەر ئەپێک دابنێ بۆ زیادکردنی"));
+ if(v==="fav")return `<h3>${T("favTitle")}</h3>`+(apps.filter(a=>favs.includes(a.id)).map(row).join("")||empty(T("favEmpty")));
+ if(v==="lang")return `<h3>${T("language")}</h3><div class="cg" style="margin-top:10px">
+  ${[["ckb","کوردی"],["en","English"],["ar","العربية"]].map(l=>`<div class="cc ${lang===l[0]?"on":""}" data-a="setlang" data-x="${l[0]}"><i class="ti ti-language"></i>${l[1]}</div>`).join("")}</div>`;
  if(v==="more")return `<div class="blue"><div style="width:48px;height:48px;border-radius:12px;background:#111;display:flex;align-items:center;justify-content:center;font-weight:700">EM</div>
-  <div style="flex:1"><b>EM App</b><div style="font-size:12px">V1.2.0</div></div></div>
-  <div class="mut" style="margin:18px 0 8px">تۆڕەکانمان</div>
+  <div style="flex:1"><b>EM App</b><div style="font-size:12px">V1.3.0</div></div></div>
+  <div class="cg" style="margin-top:12px"><div class="cc" data-a="nav" data-x="lang"><i class="ti ti-language"></i>${T("language")}</div></div>
+  <div class="mut" style="margin:18px 0 8px">${T("social")}</div>
   <div class="cg">${LINKS.map(l=>`<a class="lk" href="${l[2]}" target="_blank" rel="noopener"><i class="ti ${l[0]}"></i>${l[1]}</a>`).join("")}</div>`;
- if(v==="search")return `<input id="si" value="${esc(q)}" placeholder="گەڕان بۆ ئەپ..." autocomplete="off"><div id="sr" style="margin-top:8px"></div>`;
- if(v==="notif")return `<h3>ئاگادارکردنەوەکان</h3>`+(notices.map(n=>`<div class="nt"><i class="ti ti-bell" style="color:#3b82f6;font-size:20px"></i><div><b>${esc(n.title)}</b><div class="mut">${esc(n.body)}</div></div></div>`).join("")||empty("ئاگادارکردنەوە نییە"));
+ if(v==="search")return `<input id="si" value="${esc(q)}" placeholder="${esc(T("searchPh2"))}" autocomplete="off"><div id="sr" style="margin-top:8px"></div>`;
+ if(v==="notif")return `<h3>${T("notifTitle")}</h3>`+(notices.map(n=>`<div class="nt"><i class="ti ti-bell" style="color:#3b82f6;font-size:20px"></i><div><b>${esc(n.title)}</b><div class="mut">${esc(n.body)}</div></div></div>`).join("")||empty(T("notifNone")));
  if(v==="admin")return user?adminPage():loginPage();
 }
 const dl=(items,label,col,edit)=>items.map(a=>`<div class="li" style="cursor:default"><div class="g">${esc(label(a))}</div>
@@ -244,8 +312,8 @@ function resetForm(){editId=null;["n","d","ver","size","i","cv","sh","l"].forEac
 function results(){
  if(!$("sr"))return;
  const r=q?apps.filter(a=>(a.name||"").toLowerCase().includes(q.toLowerCase())):[];
- $("sr").innerHTML=q?(r.map(row).join("")||empty("هیچ ئەپێک نەدۆزرایەوە")):
-  `<div class="sec"><b>بەشەکان</b></div><div class="cg">${CATS.slice(1).map(c=>`<div class="cc" data-a="cat2" data-x="${c}">${c} (${apps.filter(a=>a.cat===c).length})</div>`).join("")}</div>`;
+ $("sr").innerHTML=q?(r.map(row).join("")||empty(T("noResults"))):
+  `<div class="sec"><b>${T("sections")}</b></div><div class="cg">${CATS.slice(1).map(c=>`<div class="cc" data-a="cat2" data-x="${c}">${cn(c)} (${apps.filter(a=>a.cat===c).length})</div>`).join("")}</div>`;
 }
 function badge(){const n=Math.max(0,notices.length-seen);$("bd").style.display=n?"block":"none";$("bd").textContent=n}
 function go2(i){sl=i;const t=$("trk");if(t)t.style.transform=`translateX(${-100*i}%)`;document.querySelectorAll("#dots i").forEach((d,j)=>d.classList.toggle("on",j===i))}
@@ -296,6 +364,7 @@ document.addEventListener("click",async e=>{
  const t=e.target.closest("[data-a]");if(!t)return;
  const a=t.dataset.a,x=t.dataset.x;
  if(a==="nav")go(x);
+ else if(a==="setlang")setLang(x);
  else if(a==="open"){if(v!=="detail")prev=v;curApp=x;v="detail";draw();scrollTo(0,0)}
  else if(a==="back"){v=prev||"home";draw();scrollTo(0,0)}
  else if(a==="cat"){cat=x;draw()}
@@ -308,19 +377,42 @@ document.addEventListener("click",async e=>{
   const ap=apps.find(i=>i.id===x);if(!ap)return;
   const link=url(ap.link)||location.href.split("#")[0];
   if(navigator.share){try{await navigator.share({title:ap.name,text:ap.desc,url:link})}catch{}}
-  else{try{await navigator.clipboard.writeText(link);toast("لینک کۆپی کرا")}catch{prompt("لینک:",link)}}
+  else{try{await navigator.clipboard.writeText(link);toast(T("copied"))}catch{prompt("Link:",link)}}
  }
  else if(a==="rate"){
   const [id,n]=x.split(":");
-  if(!uid){toast("چاوەڕێ بکە و دووبارە هەوڵ بدەرەوە");return}
-  try{await setDoc(doc(db,"ratings",id+"_"+uid),{app:id,uid,stars:+n});toast("سوپاس بۆ هەڵسەنگاندنەکەت")}
-  catch(err){toast("هەڵە: "+err.message)}
+  if(!uid){toast(T("wait"));return}
+  try{await setDoc(doc(db,"ratings",id+"_"+uid),{app:id,uid,stars:+n});toast(T("thanks"))}
+  catch(err){toast("Error: "+err.message)}
  }
  else if(a==="login"){
   try{await signInWithEmailAndPassword(auth,$("u").value.trim(),$("p").value)}
   catch{$("le").textContent="ئیمەیڵ یان وشەی نهێنی هەڵەیە"}
  }
  else if(a==="logout"){await signOut(auth);go("home")}
+ else if(a==="fetchapp"){
+  const m=($("asl").value.match(/id(\d+)/)||[])[1];
+  if(!m){$("afe").textContent="لینکەکە دروست نییە";return}
+  $("afe").textContent="چاوەڕێ بکە...";
+  const cb="cb"+Date.now();
+  window[cb]=d=>{
+   delete window[cb];
+   const r=d.results&&d.results[0];
+   if(!r){$("afe").textContent="نەدۆزرایەوە";return}
+   $("n").value=r.trackName||"";
+   $("d").value=(r.description||"").slice(0,400);
+   $("ver").value=r.version||"";
+   $("size").value=r.fileSizeBytes?Math.round(r.fileSizeBytes/1048576)+" MB":"";
+   $("i").value=r.artworkUrl512||"";
+   $("sh").value=(r.screenshotUrls||[]).slice(0,5).join("\n");
+   $("l").value=r.trackViewUrl||"";
+   $("afe").textContent="پڕکرایەوە ✅";
+  };
+  const s=document.createElement("script");
+  s.src="https://itunes.apple.com/lookup?id="+m+"&callback="+cb;
+  s.onerror=()=>{$("afe").textContent="هەڵە لە پەیوەندی"};
+  document.head.appendChild(s);
+ }
  else if(a==="edit"){
   const ap=apps.find(i=>i.id===x);if(!ap)return;
   editId=x;
@@ -363,6 +455,7 @@ document.addEventListener("click",async e=>{
 });
 
 if(location.hash==="#admin")v="admin";
+applyStatic();
 draw();
 </script>
 </body>
