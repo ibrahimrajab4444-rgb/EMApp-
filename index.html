@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>EM App</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.3.0/dist/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:#111;color:#f2f2f2;font-family:system-ui,Tahoma,sans-serif;font-size:15px}
+header{position:sticky;top:0;z-index:5;display:flex;gap:8px;align-items:center;padding:10px 12px;background:#1a1a1a;border-bottom:1px solid #2a2a2a}
+.rd{width:38px;height:38px;border-radius:50%;background:#2a2a2c;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;font-size:19px;flex-shrink:0}
+.rd.on{color:#f5b301}
+.bd{position:absolute;top:-2px;left:-2px;background:#e5484d;color:#fff;font-size:10px;border-radius:8px;padding:0 5px}
+.sb{flex:1;background:#2a2a2c;border-radius:20px;height:38px;display:flex;align-items:center;gap:6px;padding:0 12px;color:#9a9a9a;cursor:pointer}
+main{padding:12px 12px 110px;max-width:640px;margin:auto}
+nav{position:fixed;bottom:10px;left:10px;right:10px;max-width:620px;margin:auto;display:flex;gap:4px;padding:6px;background:#1c1c1ee6;backdrop-filter:blur(12px);border:1px solid #2a2a2a;border-radius:30px;z-index:6}
+.nb{flex:1;text-align:center;padding:7px 0;border-radius:22px;color:#9a9a9a;font-size:11px;cursor:pointer}
+.nb i{display:block;font-size:22px}
+.nb.on{background:#2c2c2e;color:#3b82f6}
+.bn{overflow:hidden;border-radius:16px;direction:ltr}
+.trk{display:flex;transition:transform .5s}
+.sl{flex:0 0 100%;height:160px;position:relative;direction:rtl;background:#26215c;display:flex;align-items:flex-end;color:#fff;text-decoration:none;overflow:hidden}
+.sl img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bt{position:relative;width:100%;padding:28px 14px 12px;background:linear-gradient(transparent,#000000cc)}
+.bt b{display:block;font-size:17px}.bt span{font-size:13px;color:#ddd}
+.dots{display:flex;justify-content:center;gap:6px;margin-top:8px}
+.dots i{width:6px;height:6px;border-radius:50%;background:#444;cursor:pointer}.dots i.on{background:#3b82f6}
+.sec{display:flex;justify-content:space-between;align-items:center;margin:20px 0 10px}
+.sec b{font-size:16px;font-weight:600}.sec a{font-size:13px;color:#9a9a9a;cursor:pointer}
+.hs{display:flex;gap:12px;overflow-x:auto;padding-bottom:4px}
+.t{width:72px;flex-shrink:0;text-align:center;font-size:12px;cursor:pointer}
+.t .n{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:4px}
+.ic{width:72px;height:72px;border-radius:17px;object-fit:cover;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:600;color:#fff;flex-shrink:0}
+.rt{color:#f5b301;font-size:11px}
+.li{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid #222;cursor:pointer}
+.li .ic{width:56px;height:56px;border-radius:14px;font-size:22px}
+.g{flex:1;min-width:0}.g b{font-weight:600}.g small{display:block;color:#9a9a9a;font-size:12px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tag{display:inline-block;font-size:10px;padding:1px 8px;border-radius:8px;background:#1d2b44;color:#85b7eb;margin-top:4px}
+.gt{background:#3b82f6;color:#fff;border:0;border-radius:18px;padding:7px 16px;font-size:13px;cursor:pointer;text-decoration:none;font-family:inherit;display:inline-block}
+.gt.s2{background:#2a2a2c;color:#f2f2f2}
+.gt.red{background:#e5484d}
+.star{font-size:20px;color:#9a9a9a;cursor:pointer;padding:4px}.star.on{color:#f5b301}
+.chips{display:flex;gap:6px;overflow-x:auto;margin-bottom:8px}
+.chip{padding:7px 14px;border-radius:18px;background:#2a2a2c;white-space:nowrap;cursor:pointer;font-size:13px}
+.chip.on{background:#3b82f6}
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cc,.lk{padding:14px;border-radius:12px;background:#1c1c1e;cursor:pointer;display:flex;align-items:center;gap:8px;color:#f2f2f2;text-decoration:none}
+.blue{background:#3b82f6;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px}
+.mut{color:#9a9a9a;font-size:13px}
+.nt{display:flex;gap:10px;padding:12px;background:#1c1c1e;border-radius:12px;margin-bottom:8px}
+.hero{position:relative;height:230px;margin:-12px -12px 0;overflow:hidden;display:flex;justify-content:space-between;align-items:flex-start;padding:14px}
+.hero .cv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero:after{content:"";position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(transparent,#111)}
+.hero .rd{z-index:2;background:#000000aa}
+.dtop{display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid #222}
+.dtop .ic{width:84px;height:84px;font-size:34px;border-radius:21px}
+.dtop h2{margin:0 0 8px;font-size:19px}
+.stats{display:flex;overflow-x:auto;border-bottom:1px solid #222;padding:14px 0;scrollbar-width:none}
+.stats::-webkit-scrollbar{display:none}
+.stats div{flex:1 0 auto;min-width:84px;text-align:center;padding:0 10px;font-size:15px}
+.stats div+div{border-right:1px solid #2a2a2a}
+.stats small{display:block;color:#9a9a9a;font-size:11px;margin-bottom:6px}
+.shots{display:flex;gap:10px;overflow-x:auto}
+.shots img{height:280px;border-radius:14px;flex-shrink:0;background:#1c1c1e}
+.desc{white-space:pre-wrap;line-height:1.8;color:#ddd;font-size:16px}
+.rate{display:flex;align-items:center;gap:16px;margin-bottom:8px}
+.rate .big{font-size:44px;font-weight:600;line-height:1}
+.stz{color:#f5b301;font-size:18px;letter-spacing:2px}
+.pick{display:flex;gap:10px;justify-content:center;font-size:34px;color:#f5b301;padding:10px 0}
+.pick span{cursor:pointer}
+input,select,textarea{width:100%;padding:11px;margin-top:8px;background:#2a2a2c;color:#f2f2f2;border:0;border-radius:10px;font-family:inherit;font-size:15px}
+.err{color:#ff7b7f;font-size:13px;margin-top:6px}
+h3{margin:0 0 6px}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#f2f2f2;color:#111;padding:8px 18px;border-radius:18px;font-size:13px;display:none;z-index:20}
+</style>
+</head>
+<body>
+<header id="hd">
+ <div class="rd" data-a="nav" data-x="notif" aria-label="notifications"><i class="ti ti-bell"></i><span class="bd" id="bd" style="display:none"></span></div>
+ <div class="sb" data-a="nav" data-x="search"><i class="ti ti-search"></i><span>یاری، بەرنامە، هتد</span></div>
+ <div class="rd" data-a="nav" data-x="admin" aria-label="admin"><i class="ti ti-user"></i></div>
+</header>
+<main id="main"></main>
+<nav id="nav">
+ <div class="nb" data-a="nav" data-x="search"><i class="ti ti-search"></i>گەڕان</div>
+ <div class="nb" data-a="nav" data-x="more"><i class="ti ti-menu-2"></i>زیاتر</div>
+ <div class="nb" data-a="nav" data-x="fav"><i class="ti ti-star"></i>تایبەت</div>
+ <div class="nb" data-a="nav" data-x="apps"><i class="ti ti-layout-grid"></i>ئەپەکان</div>
+ <div class="nb" data-a="nav" data-x="home"><i class="ti ti-home"></i>ماڵەوە</div>
+</nav>
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {getFirestore,collection,addDoc,setDoc,updateDoc,deleteDoc,doc,onSnapshot,query,orderBy,serverTimestamp}
+ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {getAuth,signInWithEmailAndPassword,signInAnonymously,signOut,onAuthStateChanged}
+ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+// ١. firebaseConfig ی خۆت لێرە دابنێ
+
+const firebaseConfig={apiKey:"AIzaSyCyCZ2xcRwETnlnaVjf-ZajOpHGktfgPG0",authDomain:"emapp-97eff.firebaseapp.com",projectId:"emapp-97eff",storageBucket:"emapp-97eff.firebasestorage.app",messagingSenderId:"613299423776",appId:"1:613299423776:web:e82587f3a26683c496ca45"};
+
+// ٢. لینکە کۆمەڵایەتییەکانت لێرە بگۆڕە
+const LINKS=[["ti-brand-instagram","Instagram","https://instagram.com/"],["ti-brand-telegram","Telegram","https://t.me/"],
+ ["ti-brand-snapchat","Snapchat","https://snapchat.com/"],["ti-brand-whatsapp","WhatsApp","https://wa.me/"],
+ ["ti-brand-tiktok","TikTok","https://tiktok.com/"],["ti-brand-facebook","Facebook","https://facebook.com/"]];
+const CATS=["هەموو","یاری","ئامراز","کۆمەڵایەتی","خوێندن","وێنە"];
+
+const fb=initializeApp(firebaseConfig),db=getFirestore(fb),auth=getAuth(fb);
+const LS=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};
+let apps=[],notices=[],banners=[],ratings=[],user=null,uid=null;
+let v="home",prev="home",curApp=null,cat="هەموو",sortBy="new",q="",sl=0,tm,editId=null;
+let favs=LS("em_favs",[]),gots=LS("em_got",[]),seen=+localStorage.getItem("em_seen")||0;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const url=u=>/^https?:\/\//i.test(u||"")?u:"";
+const hue=a=>[...(a.name||"?")].reduce((n,c)=>n+c.charCodeAt(0),0)%360;
+const empty=t=>`<p class="mut" style="text-align:center;padding:24px 0">${t}</p>`;
+function toast(t){const e=$("toast");e.textContent=t;e.style.display="block";clearTimeout(e._t);e._t=setTimeout(()=>e.style.display="none",1800)}
+
+/* هەڵسەنگاندن */
+const rt=id=>{const l=ratings.filter(r=>r.app===id);return {n:l.length,avg:l.length?l.reduce((s,r)=>s+r.stars,0)/l.length:0}};
+const mine=id=>ratings.find(r=>r.id===id+"_"+uid)?.stars||0;
+const stz=n=>[1,2,3,4,5].map(i=>i<=Math.round(n)?"★":"☆").join("");
+const gAvg=()=>ratings.length?ratings.reduce((s,r)=>s+r.stars,0)/ratings.length:0;
+const score=a=>{const r=rt(a.id);return (r.n*r.avg+3*gAvg())/(r.n+3)};
+const best=()=>apps.filter(a=>rt(a.id).n>0).sort((x,y)=>score(y)-score(x)||rt(y.id).n-rt(x.id).n);
+
+/* پێکهاتەکان */
+const icon=a=>url(a.icon)?`<img class="ic" src="${esc(a.icon)}" alt="">`:
+ `<div class="ic" style="background:hsl(${hue(a)} 45% 35%)">${esc((a.name||"?")[0])}</div>`;
+const tile=a=>`<div class="t" data-a="open" data-x="${a.id}">${icon(a)}<div class="n">${esc(a.name)}</div></div>`;
+const rtile=a=>`<div class="t" data-a="open" data-x="${a.id}">${icon(a)}<div class="n">${esc(a.name)}</div><div class="rt">★ ${rt(a.id).avg.toFixed(1)}</div></div>`;
+const row=a=>`<div class="li" data-a="open" data-x="${a.id}">${icon(a)}<div class="g"><b>${esc(a.name)}</b><small>${esc(a.desc)}</small>
+ <span class="tag">${esc(a.cat)}</span>${rt(a.id).n?`<span class="rt"> ★ ${rt(a.id).avg.toFixed(1)}</span>`:""}</div>
+ <i class="ti ti-star star ${favs.includes(a.id)?"on":""}" data-a="fav" data-x="${a.id}"></i>
+ ${url(a.link)?`<a class="gt" data-got="${a.id}" href="${esc(a.link)}" target="_blank" rel="noopener">${gots.includes(a.id)?"دووبارە":"وەرگرتن"}</a>`:""}</div>`;
+const sec=(t,i,go)=>`<div class="sec"><b><i class="ti ${i}" style="margin-left:6px"></i>${t}</b><a data-a="nav" data-x="${go}">گشت</a></div>`;
+const fdate=a=>{const t=(a.upd||a.created)?.toDate?.();if(!t)return "—";return t.toDateString()===new Date().toDateString()?"ئەمڕۆ":t.toLocaleDateString("en-GB")};
+
+const slide=b=>{
+ const inner=`${url(b.img)?`<img src="${esc(b.img)}" alt="">`:""}<div class="bt"><b>${esc(b.title)}</b><span>${esc(b.sub)}</span></div>`;
+ return url(b.link)?`<a class="sl" href="${esc(b.link)}" target="_blank" rel="noopener">${inner}</a>`:`<div class="sl">${inner}</div>`;
+};
+const hero=()=>{
+ const list=banners.length?banners:[{title:"بەخێربێیت بۆ EM App",sub:"باشترین ئەپەکان لە یەک شوێن"}];
+ return `<div class="bn"><div class="trk" id="trk">${list.map(slide).join("")}</div></div>`+
+  (list.length>1?`<div class="dots" id="dots">${list.map((_,i)=>`<i data-a="slide" data-x="${i}"></i>`).join("")}</div>`:"");
+};
+
+function detailPage(){
+ const a=apps.find(x=>x.id===curApp);
+ if(!a)return `<div class="rd" data-a="back"><i class="ti ti-arrow-right"></i></div>`+empty("ئەپەکە نەدۆزرایەوە");
+ const shots=String(a.shots||"").split(/[\s,]+/).filter(url);
+ const more=apps.filter(x=>x.id!==a.id).sort((x,y)=>(y.cat===a.cat)-(x.cat===a.cat)).slice(0,8);
+ const r=rt(a.id),my=mine(a.id),got=gots.includes(a.id)&&url(a.link);
+ return `<div class="hero" style="background:hsl(${hue(a)} 35% 18%)">
+  ${url(a.cover)?`<img class="cv" src="${esc(a.cover)}" alt="">`:""}
+  <div class="rd" data-a="back" aria-label="back"><i class="ti ti-arrow-right"></i></div>
+  <div class="rd ${favs.includes(a.id)?"on":""}" data-a="fav" data-x="${a.id}" aria-label="bookmark"><i class="ti ti-bookmark"></i></div></div>
+ <div class="dtop">${icon(a)}<div class="g"><h2>${esc(a.name)}</h2>
+  <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+   ${url(a.link)?`<a class="gt" data-got="${a.id}" href="${esc(a.link)}" target="_blank" rel="noopener">وەرگرتن</a>`:`<span class="mut">لینک نییە</span>`}
+   ${got?`<a class="gt s2" href="${esc(a.link)}" target="_blank" rel="noopener">دووبارە</a>`:""}
+   <button class="gt s2" data-a="share" data-x="${a.id}">هاوبەشکردن</button>
+   <span class="tag">${esc(a.cat)}</span></div></div></div>
+ <div class="stats"><div><small>وەشان</small>${esc(a.ver||"—")}</div><div><small>قەبارە</small>${esc(a.size||"—")}</div>
+  <div><small>جۆر</small>${esc(a.cat)}</div><div><small>هەڵسەنگاندن</small>${r.n?r.avg.toFixed(1)+" ★":"—"}</div>
+  <div><small>نوێکراوەتەوە</small>${fdate(a)}</div></div>
+ <div class="sec"><b class="mut" style="font-weight:400">دەربارە</b></div><div class="desc">${esc(a.desc||"")}</div>
+ ${shots.length?`<div class="sec"><b>وێنەکان</b></div><div class="shots">${shots.map(s=>`<img src="${esc(s)}" alt="" loading="lazy">`).join("")}</div>`:""}
+ <div class="sec"><b>هەڵسەنگاندن</b></div>
+ <div class="rate"><div class="big">${r.n?r.avg.toFixed(1):"—"}</div><div><div class="stz">${stz(r.avg)}</div><div class="mut">${r.n?r.n+" هەڵسەنگاندن":"هێشتا هەڵسەنگاندن نییە"}</div></div></div>
+ <div class="mut" style="text-align:center">${my?"هەڵسەنگاندنی تۆ: "+my+" لە ٥":"ئەم ئەپە هەڵبسەنگێنە"}</div>
+ <div class="pick">${[1,2,3,4,5].map(i=>`<span data-a="rate" data-x="${a.id}:${i}">${i<=my?"★":"☆"}</span>`).join("")}</div>
+ ${more.length?`<div class="sec"><b>لەوانەیە ئەمانەشت بەدڵبێت</b><a data-a="nav" data-x="apps">گشت</a></div><div class="hs">${more.map(tile).join("")}</div>`:""}`;
+}
+function adminPage(){
+ return `<h3 id="ft">زیادکردنی ئەپ</h3>
+ <input id="n" placeholder="ناوی ئەپ"><select id="c">${CATS.slice(1).map(c=>`<option>${c}</option>`).join("")}</select>
+ <textarea id="d" rows="3" placeholder="وەسف"></textarea>
+ <input id="ver" placeholder="وەشان (نموونە: 1.2.0)"><input id="size" placeholder="قەبارە (نموونە: 85 MB)">
+ <input id="i" dir="ltr" placeholder="لینکی وێنەی ئایکۆن (https://...)">
+ <input id="cv" dir="ltr" placeholder="لینکی وێنەی بانەری سەرەوەی لاپەڕەی ئەپ">
+ <textarea id="sh" dir="ltr" rows="2" placeholder="لینکی وێنەی شاشە، بە کۆما یان هێڵی نوێ جیایان بکەرەوە"></textarea>
+ <input id="l" dir="ltr" placeholder="لینکی App Store یان TestFlight"><div class="err" id="ae"></div>
+ <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+  <button class="gt" id="sv" data-a="addapp">زیادکردن</button>
+  <button class="gt s2" id="cx" data-a="cancel" style="display:none">پاشگەزبوونەوە</button>
+  <button class="gt red" data-a="logout">دەرچوون</button></div>
+ <h3 style="margin-top:26px">زیادکردنی بانەر</h3>
+ <input id="bt" placeholder="ناونیشان"><input id="bs" placeholder="دەقی ژێرەوە"><input id="bi" dir="ltr" placeholder="لینکی وێنەی بانەر">
+ <input id="bl" dir="ltr" placeholder="لینکی کلیک (ئارەزوومەندانە)"><div class="err" id="be"></div>
+ <button class="gt" style="margin-top:10px" data-a="addban">زیادکردن</button>
+ <h3 style="margin-top:26px">ئاگادارکردنەوەی نوێ</h3><input id="nt" placeholder="ناونیشان"><input id="nb" placeholder="دەق">
+ <button class="gt" style="margin-top:10px" data-a="addnote">بڵاوکردنەوە</button>
+ <h3 style="margin-top:26px">ئەپەکان</h3><div id="al"></div>
+ <h3 style="margin-top:26px">بانەرەکان</h3><div id="bll"></div>
+ <h3 style="margin-top:26px">ئاگادارکردنەوەکان</h3><div id="nl"></div>`;
+}
+const loginPage=()=>`<h3>چوونەژوورەوەی ئادمین</h3><input id="u" dir="ltr" type="email" placeholder="ئیمەیڵ"><input id="p" dir="ltr" type="password" placeholder="وشەی نهێنی">
+ <div class="err" id="le"></div><button class="gt" style="margin-top:10px" data-a="login">چوونەژوورەوە</button>`;
+
+function page(){
+ if(v==="home")return hero()+
+  sec("نوێترین ئەپەکان","ti-flame","apps")+(apps.length?`<div class="hs">${apps.slice(0,8).map(tile).join("")}</div>`:empty("هێشتا ئەپ زیاد نەکراوە"))+
+  (best().length?sec("باشترینەکان","ti-trophy","top")+`<div class="hs">${best().slice(0,8).map(rtile).join("")}</div>`:"")+
+  sec("بەم دواییە","ti-history","apps")+apps.slice(0,5).map(row).join("");
+ if(v==="detail")return detailPage();
+ if(v==="top")return `<h3>باشترینەکان</h3>`+(best().map(row).join("")||empty("هێشتا هەڵسەنگاندن نییە"));
+ if(v==="apps"){
+  let l=apps.filter(a=>cat==="هەموو"||a.cat===cat);
+  if(sortBy==="top")l=l.slice().sort((x,y)=>score(y)-score(x));
+  return `<div class="chips">${CATS.map(c=>`<div class="chip ${c===cat?"on":""}" data-a="cat" data-x="${c}">${c}</div>`).join("")}</div>
+  <div class="chips"><div class="chip ${sortBy==="new"?"on":""}" data-a="sort" data-x="new">نوێترین</div>
+  <div class="chip ${sortBy==="top"?"on":""}" data-a="sort" data-x="top">باشترین هەڵسەنگاندن</div></div>`+(l.map(row).join("")||empty("هیچ ئەپێک نییە"));
+ }
+ if(v==="fav")return `<h3>تایبەت</h3>`+(apps.filter(a=>favs.includes(a.id)).map(row).join("")||empty("ئەستێرە لەسەر ئەپێک دابنێ بۆ زیادکردنی"));
+ if(v==="more")return `<div class="blue"><div style="width:48px;height:48px;border-radius:12px;background:#111;display:flex;align-items:center;justify-content:center;font-weight:700">EM</div>
+  <div style="flex:1"><b>EM App</b><div style="font-size:12px">V1.2.0</div></div></div>
+  <div class="mut" style="margin:18px 0 8px">تۆڕەکانمان</div>
+  <div class="cg">${LINKS.map(l=>`<a class="lk" href="${l[2]}" target="_blank" rel="noopener"><i class="ti ${l[0]}"></i>${l[1]}</a>`).join("")}</div>`;
+ if(v==="search")return `<input id="si" value="${esc(q)}" placeholder="گەڕان بۆ ئەپ..." autocomplete="off"><div id="sr" style="margin-top:8px"></div>`;
+ if(v==="notif")return `<h3>ئاگادارکردنەوەکان</h3>`+(notices.map(n=>`<div class="nt"><i class="ti ti-bell" style="color:#3b82f6;font-size:20px"></i><div><b>${esc(n.title)}</b><div class="mut">${esc(n.body)}</div></div></div>`).join("")||empty("ئاگادارکردنەوە نییە"));
+ if(v==="admin")return user?adminPage():loginPage();
+}
+const dl=(items,label,col,edit)=>items.map(a=>`<div class="li" style="cursor:default"><div class="g">${esc(label(a))}</div>
+ ${edit?`<button class="gt s2" data-a="edit" data-x="${a.id}">دەستکاری</button>`:""}
+ <button class="gt red" data-a="del" data-x="${col}:${a.id}">سڕینەوە</button></div>`).join("");
+function lists(){
+ if($("al"))$("al").innerHTML=dl(apps,a=>a.name,"apps",true);
+ if($("bll"))$("bll").innerHTML=dl(banners,b=>b.title,"banners");
+ if($("nl"))$("nl").innerHTML=dl(notices,n=>n.title,"notices");
+}
+function formMode(){
+ if(!$("ft"))return;
+ $("ft").textContent=editId?"دەستکاریکردنی ئەپ":"زیادکردنی ئەپ";
+ $("sv").textContent=editId?"هەڵگرتنی گۆڕانکاری":"زیادکردن";
+ $("cx").style.display=editId?"inline-block":"none";
+}
+function resetForm(){editId=null;["n","d","ver","size","i","cv","sh","l"].forEach(k=>$(k).value="");$("ae").textContent="";formMode()}
+function results(){
+ if(!$("sr"))return;
+ const r=q?apps.filter(a=>(a.name||"").toLowerCase().includes(q.toLowerCase())):[];
+ $("sr").innerHTML=q?(r.map(row).join("")||empty("هیچ ئەپێک نەدۆزرایەوە")):
+  `<div class="sec"><b>بەشەکان</b></div><div class="cg">${CATS.slice(1).map(c=>`<div class="cc" data-a="cat2" data-x="${c}">${c} (${apps.filter(a=>a.cat===c).length})</div>`).join("")}</div>`;
+}
+function badge(){const n=Math.max(0,notices.length-seen);$("bd").style.display=n?"block":"none";$("bd").textContent=n}
+function go2(i){sl=i;const t=$("trk");if(t)t.style.transform=`translateX(${-100*i}%)`;document.querySelectorAll("#dots i").forEach((d,j)=>d.classList.toggle("on",j===i))}
+function carousel(){
+ clearInterval(tm);const n=banners.length;if(n<2)return;
+ tm=setInterval(()=>{if(v!=="home"||!$("trk")){clearInterval(tm);return}go2((sl+1)%n)},4000);
+}
+function draw(){
+ const d=v==="detail";
+ $("hd").style.display=d?"none":"flex";$("nav").style.display=d?"none":"flex";
+ $("main").innerHTML=page();
+ document.querySelectorAll("#nav .nb").forEach(n=>n.classList.toggle("on",n.dataset.x===v));
+ const si=$("si");if(si)si.oninput=()=>{q=si.value;results()};
+ results();lists();formMode();badge();
+ if(v==="home"){if(sl>=Math.max(1,banners.length))sl=0;go2(sl);carousel()}else clearInterval(tm);
+}
+function refresh(){
+ if(v==="admin"){if(user){lists();badge()}}
+ else if(v==="search"){results();badge()}
+ else draw();
+}
+function go(x){
+ editId=null;v=x;
+ if(x==="notif"){seen=notices.length;localStorage.setItem("em_seen",seen)}
+ history.replaceState(null,"",x==="admin"?"#admin":location.pathname);draw();scrollTo(0,0);
+}
+
+/* داتا لە Firebase */
+onSnapshot(query(collection(db,"apps"),orderBy("created","desc")),s=>{apps=s.docs.map(d=>({id:d.id,...d.data()}));refresh()});
+onSnapshot(query(collection(db,"notices"),orderBy("created","desc")),s=>{notices=s.docs.map(d=>({id:d.id,...d.data()}));refresh()});
+onSnapshot(query(collection(db,"banners"),orderBy("created","desc")),s=>{banners=s.docs.map(d=>({id:d.id,...d.data()}));refresh()});
+onSnapshot(collection(db,"ratings"),s=>{ratings=s.docs.map(d=>({id:d.id,...d.data()}));refresh()});
+onAuthStateChanged(auth,u=>{
+ if(!u){signInAnonymously(auth).catch(()=>{});return}
+ uid=u.uid;user=u.isAnonymous?null:u;
+ if(v==="admin")draw();
+});
+
+/* کلیکەکان */
+document.addEventListener("click",async e=>{
+ const gl=e.target.closest("a[data-got]");
+ if(gl){
+  const id=gl.dataset.got;
+  if(!gots.includes(id)){gots=[...gots,id];localStorage.setItem("em_got",JSON.stringify(gots));setTimeout(()=>{if(v!=="admin")draw()},400)}
+  return;
+ }
+ if(e.target.closest("a[href]"))return;
+ const t=e.target.closest("[data-a]");if(!t)return;
+ const a=t.dataset.a,x=t.dataset.x;
+ if(a==="nav")go(x);
+ else if(a==="open"){if(v!=="detail")prev=v;curApp=x;v="detail";draw();scrollTo(0,0)}
+ else if(a==="back"){v=prev||"home";draw();scrollTo(0,0)}
+ else if(a==="cat"){cat=x;draw()}
+ else if(a==="cat2"){cat=x;go("apps")}
+ else if(a==="sort"){sortBy=x;draw()}
+ else if(a==="slide"){go2(+x);carousel()}
+ else if(a==="fav"){favs=favs.includes(x)?favs.filter(i=>i!==x):[...favs,x];localStorage.setItem("em_favs",JSON.stringify(favs));
+  const y=scrollY;draw();scrollTo(0,y)}
+ else if(a==="share"){
+  const ap=apps.find(i=>i.id===x);if(!ap)return;
+  const link=url(ap.link)||location.href.split("#")[0];
+  if(navigator.share){try{await navigator.share({title:ap.name,text:ap.desc,url:link})}catch{}}
+  else{try{await navigator.clipboard.writeText(link);toast("لینک کۆپی کرا")}catch{prompt("لینک:",link)}}
+ }
+ else if(a==="rate"){
+  const [id,n]=x.split(":");
+  if(!uid){toast("چاوەڕێ بکە و دووبارە هەوڵ بدەرەوە");return}
+  try{await setDoc(doc(db,"ratings",id+"_"+uid),{app:id,uid,stars:+n});toast("سوپاس بۆ هەڵسەنگاندنەکەت")}
+  catch(err){toast("هەڵە: "+err.message)}
+ }
+ else if(a==="login"){
+  try{await signInWithEmailAndPassword(auth,$("u").value.trim(),$("p").value)}
+  catch{$("le").textContent="ئیمەیڵ یان وشەی نهێنی هەڵەیە"}
+ }
+ else if(a==="logout"){await signOut(auth);go("home")}
+ else if(a==="edit"){
+  const ap=apps.find(i=>i.id===x);if(!ap)return;
+  editId=x;
+  const m={n:"name",d:"desc",ver:"ver",size:"size",i:"icon",cv:"cover",sh:"shots",l:"link"};
+  for(const k in m)$(k).value=ap[m[k]]||"";
+  $("c").value=ap.cat;formMode();scrollTo({top:0,behavior:"smooth"});
+ }
+ else if(a==="cancel")resetForm();
+ else if(a==="addapp"){
+  const name=$("n").value.trim();
+  if(!name){$("ae").textContent="ناوی ئەپ بنووسە";return}
+  const data={name,cat:$("c").value,desc:$("d").value.trim(),ver:$("ver").value.trim(),size:$("size").value.trim(),
+   icon:$("i").value.trim(),cover:$("cv").value.trim(),shots:$("sh").value.trim(),link:$("l").value.trim()};
+  try{
+   if(editId)await updateDoc(doc(db,"apps",editId),{...data,upd:serverTimestamp()});
+   else await addDoc(collection(db,"apps"),{...data,created:serverTimestamp()});
+   resetForm();toast("هەڵگیرا");
+  }catch(err){$("ae").textContent="ڕێگەپێنەدراو: "+err.message}
+ }
+ else if(a==="addban"){
+  if(!$("bt").value.trim()){$("be").textContent="ناونیشان بنووسە";return}
+  try{
+   await addDoc(collection(db,"banners"),{title:$("bt").value.trim(),sub:$("bs").value.trim(),img:$("bi").value.trim(),link:$("bl").value.trim(),created:serverTimestamp()});
+   ["bt","bs","bi","bl"].forEach(k=>$(k).value="");$("be").textContent="";
+  }catch(err){$("be").textContent="ڕێگەپێنەدراو: "+err.message}
+ }
+ else if(a==="addnote"){
+  if(!$("nt").value.trim())return;
+  try{await addDoc(collection(db,"notices"),{title:$("nt").value.trim(),body:$("nb").value.trim(),created:serverTimestamp()});$("nt").value=$("nb").value=""}
+  catch(err){toast(err.message)}
+ }
+ else if(a==="del"){
+  if(!confirm("دڵنیایت؟"))return;
+  const [col,id]=x.split(":");
+  try{
+   await deleteDoc(doc(db,col,id));
+   if(col==="apps")ratings.filter(r=>r.app===id).forEach(r=>deleteDoc(doc(db,"ratings",r.id)).catch(()=>{}));
+  }catch(err){toast(err.message)}
+ }
+});
+
+if(location.hash==="#admin")v="admin";
+draw();
+</script>
+</body>
+</html>
