@@ -4,17 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>EM App</title>
+<meta name="theme-color" content="#111111">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="EM App">
+<link rel="apple-touch-icon" id="ati">
+<link rel="manifest" id="mf">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.3.0/dist/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{margin:0;background:#111;color:#f2f2f2;font-family:system-ui,Tahoma,sans-serif;font-size:15px}
-header{position:sticky;top:0;z-index:5;display:flex;gap:8px;align-items:center;padding:10px 12px;background:#1a1a1a;border-bottom:1px solid #2a2a2a}
+header{position:sticky;top:0;z-index:5;display:flex;gap:8px;align-items:center;padding:calc(10px + env(safe-area-inset-top)) 12px 10px;background:#1a1a1a;border-bottom:1px solid #2a2a2a}
 .rd{width:38px;height:38px;border-radius:50%;background:#2a2a2c;display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;font-size:19px;flex-shrink:0}
 .rd.on{color:#f5b301}
 .bd{position:absolute;top:-2px;inset-inline-end:-2px;background:#e5484d;color:#fff;font-size:10px;border-radius:8px;padding:0 5px}
 .sb{flex:1;min-width:0;background:#2a2a2c;border-radius:20px;height:38px;display:flex;align-items:center;gap:6px;padding:0 12px;color:#9a9a9a;cursor:pointer;white-space:nowrap;overflow:hidden}
 main{padding:12px 12px 110px;max-width:640px;margin:auto}
-nav{position:fixed;bottom:10px;left:10px;right:10px;max-width:620px;margin:auto;display:flex;gap:4px;padding:6px;background:#1c1c1ee6;backdrop-filter:blur(12px);border:1px solid #2a2a2a;border-radius:30px;z-index:6}
+nav{position:fixed;bottom:calc(10px + env(safe-area-inset-bottom));left:10px;right:10px;max-width:620px;margin:auto;display:flex;gap:4px;padding:6px;background:#1c1c1ee6;backdrop-filter:blur(12px);border:1px solid #2a2a2a;border-radius:30px;z-index:6}
 html[dir=ltr] nav{flex-direction:row-reverse}
 .nb{flex:1;text-align:center;padding:7px 0;border-radius:22px;color:#9a9a9a;font-size:11px;cursor:pointer}
 .nb i{display:block;font-size:22px}
@@ -52,7 +59,7 @@ html[dir=ltr] .sl{direction:ltr}
 .blue{background:#3b82f6;border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px}
 .mut{color:#9a9a9a;font-size:13px}
 .nt{display:flex;gap:10px;padding:12px;background:#1c1c1e;border-radius:12px;margin-bottom:8px}
-.hero{position:relative;height:230px;margin:-12px -12px 0;overflow:hidden;display:flex;justify-content:space-between;align-items:flex-start;padding:14px}
+.hero{position:relative;height:230px;margin:-12px -12px 0;overflow:hidden;display:flex;justify-content:space-between;align-items:flex-start;padding:calc(14px + env(safe-area-inset-top)) 14px 14px}
 .hero .cv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .hero:after{content:"";position:absolute;left:0;right:0;bottom:0;height:70px;background:linear-gradient(transparent,#111)}
 .hero .rd{z-index:2;background:#000000aa}
@@ -102,14 +109,30 @@ import {getFirestore,collection,addDoc,setDoc,updateDoc,deleteDoc,doc,onSnapshot
 import {getAuth,signInWithEmailAndPassword,signInAnonymously,signOut,onAuthStateChanged}
  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
+/* ===== PWA: ئایکۆن و manifest خۆکار ===== */
+(function(){
+ try{
+  const c=document.createElement("canvas");c.width=c.height=512;
+  const g=c.getContext("2d");
+  const gr=g.createLinearGradient(0,0,512,512);gr.addColorStop(0,"#3b82f6");gr.addColorStop(1,"#6c3cf0");
+  g.fillStyle=gr;g.fillRect(0,0,512,512);
+  g.fillStyle="#ffffff";g.font="bold 230px system-ui,Arial,sans-serif";g.textAlign="center";g.textBaseline="middle";
+  g.fillText("EM",256,274);
+  const png=c.toDataURL("image/png");
+  document.getElementById("ati").href=png;
+  const base=location.href.split("#")[0].split("?")[0];
+  const m={name:"EM App",short_name:"EM App",start_url:base,scope:base,display:"standalone",background_color:"#111111",theme_color:"#111111",icons:[{src:png,sizes:"512x512",type:"image/png"}]};
+  document.getElementById("mf").href=URL.createObjectURL(new Blob([JSON.stringify(m)],{type:"application/manifest+json"}));
+ }catch(e){}
+})();
+
 const firebaseConfig={apiKey:"AIzaSyCyCZ2xcRwETnlnaVjf-ZajOpHGktfgPG0",authDomain:"emapp-97eff.firebaseapp.com",projectId:"emapp-97eff",storageBucket:"emapp-97eff.firebasestorage.app",messagingSenderId:"613299423776",appId:"1:613299423776:web:e82587f3a26683c496ca45"};
 
-// لینکە کۆمەڵایەتییەکانت لێرە بگۆڕە
-const LINKS=[["ti-brand-instagram","Instagram","https://instagram.com/"],["ti-brand-telegram","Telegram","https://t.me/"],
- ["ti-brand-snapchat","Snapchat","https://snapchat.com/"],["ti-brand-whatsapp","WhatsApp","https://wa.me/"],
- ["ti-brand-tiktok","TikTok","https://tiktok.com/"],["ti-brand-facebook","Facebook","https://facebook.com/"]];
+// سۆشیاڵ میدیا: [ئایکۆن، ناو، کلیل]. لینکەکان لە ئادمین دەگۆڕدرێن
+const SOC=[["ti-brand-instagram","Instagram","instagram"],["ti-brand-telegram","Telegram","telegram"],
+ ["ti-brand-snapchat","Snapchat","snapchat"],["ti-brand-whatsapp","WhatsApp","whatsapp"],
+ ["ti-brand-tiktok","TikTok","tiktok"],["ti-brand-facebook","Facebook","facebook"]];
 
-// بەشەکان لە داتابەیس بە کوردی هەڵدەگیرێن، بۆیە ئەمانە وەک خۆیان بمێننەوە
 const CATS=["هەموو","یاری","ئامراز","کۆمەڵایەتی","خوێندن","وێنە"];
 
 /* ===== وەرگێڕان ===== */
@@ -162,6 +185,7 @@ ar:{
 let lang=localStorage.getItem("em_lang")||"ckb";if(!I18N[lang])lang="ckb";
 const T=k=>{const v=I18N[lang][k];return v===undefined?I18N.ckb[k]:v};
 const cn=c=>I18N[lang].cats[c]||c;
+const dsc=a=>lang==="en"?(a.descEn||a.desc):lang==="ar"?(a.descAr||a.desc):a.desc;
 function applyStatic(){
  const h=document.documentElement;h.lang=lang;h.dir=lang==="en"?"ltr":"rtl";
  document.querySelectorAll("[data-t]").forEach(e=>e.textContent=T(e.dataset.t));
@@ -170,7 +194,7 @@ function setLang(l){lang=l;localStorage.setItem("em_lang",l);applyStatic();draw(
 
 const fb=initializeApp(firebaseConfig),db=getFirestore(fb),auth=getAuth(fb);
 const LS=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};
-let apps=[],notices=[],banners=[],ratings=[],user=null,uid=null;
+let apps=[],notices=[],banners=[],ratings=[],social={},user=null,uid=null;
 let v="home",prev="home",curApp=null,cat="هەموو",sortBy="new",q="",sl=0,tm,editId=null;
 let favs=LS("em_favs",[]),gots=LS("em_got",[]),seen=+localStorage.getItem("em_seen")||0;
 const $=id=>document.getElementById(id);
@@ -193,7 +217,7 @@ const icon=a=>url(a.icon)?`<img class="ic" src="${esc(a.icon)}" alt="">`:
  `<div class="ic" style="background:hsl(${hue(a)} 45% 35%)">${esc((a.name||"?")[0])}</div>`;
 const tile=a=>`<div class="t" data-a="open" data-x="${a.id}">${icon(a)}<div class="n">${esc(a.name)}</div></div>`;
 const rtile=a=>`<div class="t" data-a="open" data-x="${a.id}">${icon(a)}<div class="n">${esc(a.name)}</div><div class="rt">★ ${rt(a.id).avg.toFixed(1)}</div></div>`;
-const row=a=>`<div class="li" data-a="open" data-x="${a.id}">${icon(a)}<div class="g"><b>${esc(a.name)}</b><small>${esc(a.desc)}</small>
+const row=a=>`<div class="li" data-a="open" data-x="${a.id}">${icon(a)}<div class="g"><b>${esc(a.name)}</b><small>${esc(dsc(a))}</small>
  <span class="tag">${esc(cn(a.cat))}</span>${rt(a.id).n?`<span class="rt"> ★ ${rt(a.id).avg.toFixed(1)}</span>`:""}</div>
  <i class="ti ti-star star ${favs.includes(a.id)?"on":""}" data-a="fav" data-x="${a.id}"></i>
  ${url(a.link)?`<a class="gt" data-got="${a.id}" href="${esc(a.link)}" target="_blank" rel="noopener">${gots.includes(a.id)?T("again"):T("get")}</a>`:""}</div>`;
@@ -230,7 +254,7 @@ function detailPage(){
  <div class="stats"><div><small>${T("ver")}</small>${esc(a.ver||"—")}</div><div><small>${T("size")}</small>${esc(a.size||"—")}</div>
   <div><small>${T("type")}</small>${esc(cn(a.cat))}</div><div><small>${T("rating")}</small>${r.n?r.avg.toFixed(1)+" ★":"—"}</div>
   <div><small>${T("updated")}</small>${fdate(a)}</div></div>
- <div class="sec"><b class="mut" style="font-weight:400">${T("about")}</b></div><div class="desc">${esc(a.desc||"")}</div>
+ <div class="sec"><b class="mut" style="font-weight:400">${T("about")}</b></div><div class="desc">${esc(dsc(a)||"")}</div>
  ${shots.length?`<div class="sec"><b>${T("shots")}</b></div><div class="shots">${shots.map(s=>`<img src="${esc(s)}" alt="" loading="lazy">`).join("")}</div>`:""}
  <div class="sec"><b>${T("rating")}</b></div>
  <div class="rate"><div class="big">${r.n?r.avg.toFixed(1):"—"}</div><div><div class="stz">${stz(r.avg)}</div><div class="mut">${r.n?T("nRatings")(r.n):T("noRatings")}</div></div></div>
@@ -245,7 +269,9 @@ function adminPage(){
  <input id="asl" dir="ltr" placeholder="لینکی App Store لێرە دابنێ"><button class="gt s2" style="margin-top:8px" data-a="fetchapp">پڕکردنەوەی خۆکار</button><div class="err" id="afe"></div>
  <h3 id="ft" style="margin-top:22px">زیادکردنی ئەپ</h3>
  <input id="n" placeholder="ناوی ئەپ"><select id="c">${CATS.slice(1).map(c=>`<option>${c}</option>`).join("")}</select>
- <textarea id="d" rows="3" placeholder="وەسف"></textarea>
+ <textarea id="d" rows="3" placeholder="وەسفی کوردی"></textarea>
+ <textarea id="den" dir="ltr" rows="3" placeholder="English description"></textarea>
+ <textarea id="dar" rows="3" placeholder="الوصف بالعربية"></textarea>
  <input id="ver" placeholder="وەشان (نموونە: 1.2.0)"><input id="size" placeholder="قەبارە (نموونە: 85 MB)">
  <input id="i" dir="ltr" placeholder="لینکی وێنەی ئایکۆن (https://...)">
  <input id="cv" dir="ltr" placeholder="لینکی وێنەی بانەری سەرەوەی لاپەڕەی ئەپ">
@@ -255,6 +281,11 @@ function adminPage(){
   <button class="gt" id="sv" data-a="addapp">زیادکردن</button>
   <button class="gt s2" id="cx" data-a="cancel" style="display:none">پاشگەزبوونەوە</button>
   <button class="gt red" data-a="logout">دەرچوون</button></div>
+ <h3 style="margin-top:26px">لینکی سۆشیاڵ میدیا</h3>
+ <div class="mut">لینکی تەواو یان بەبێ https بنووسە. بۆ WhatsApp ژمارەکە بنووسە (نموونە: 9647501234567). بەتاڵی بهێڵەوە ئەگەر نایەوێت.</div>
+ ${SOC.map(s=>`<input id="s_${s[2]}" dir="ltr" placeholder="${s[1]}">`).join("")}
+ <div class="err" id="se"></div>
+ <button class="gt" style="margin-top:10px" data-a="savesoc">هەڵگرتنی لینکەکان</button>
  <h3 style="margin-top:26px">زیادکردنی بانەر</h3>
  <input id="bt" placeholder="ناونیشان"><input id="bs" placeholder="دەقی ژێرەوە"><input id="bi" dir="ltr" placeholder="لینکی وێنەی بانەر">
  <input id="bl" dir="ltr" placeholder="لینکی کلیک (ئارەزوومەندانە)"><div class="err" id="be"></div>
@@ -267,6 +298,15 @@ function adminPage(){
 }
 const loginPage=()=>`<h3>چوونەژوورەوەی ئادمین</h3><input id="u" dir="ltr" type="email" placeholder="ئیمەیڵ"><input id="p" dir="ltr" type="password" placeholder="وشەی نهێنی">
  <div class="err" id="le"></div><button class="gt" style="margin-top:10px" data-a="login">چوونەژوورەوە</button>`;
+
+function morePage(){
+ const soc=SOC.filter(s=>url(social[s[2]]));
+ return `<div class="blue"><div style="width:48px;height:48px;border-radius:12px;background:#111;display:flex;align-items:center;justify-content:center;font-weight:700">EM</div>
+  <div style="flex:1"><b>EM App</b><div style="font-size:12px">V1.6.0</div></div></div>
+  <div class="cg" style="margin-top:12px"><div class="cc" data-a="nav" data-x="lang"><i class="ti ti-language"></i>${T("language")}</div></div>
+  ${soc.length?`<div class="mut" style="margin:18px 0 8px">${T("social")}</div>
+  <div class="cg">${soc.map(s=>`<a class="lk" href="${esc(social[s[2]])}" target="_blank" rel="noopener"><i class="ti ${s[0]}"></i>${s[1]}</a>`).join("")}</div>`:""}`;
+}
 
 function page(){
  if(v==="home")return hero()+
@@ -285,11 +325,7 @@ function page(){
  if(v==="fav")return `<h3>${T("favTitle")}</h3>`+(apps.filter(a=>favs.includes(a.id)).map(row).join("")||empty(T("favEmpty")));
  if(v==="lang")return `<h3>${T("language")}</h3><div class="cg" style="margin-top:10px">
   ${[["ckb","کوردی"],["en","English"],["ar","العربية"]].map(l=>`<div class="cc ${lang===l[0]?"on":""}" data-a="setlang" data-x="${l[0]}"><i class="ti ti-language"></i>${l[1]}</div>`).join("")}</div>`;
- if(v==="more")return `<div class="blue"><div style="width:48px;height:48px;border-radius:12px;background:#111;display:flex;align-items:center;justify-content:center;font-weight:700">EM</div>
-  <div style="flex:1"><b>EM App</b><div style="font-size:12px">V1.3.0</div></div></div>
-  <div class="cg" style="margin-top:12px"><div class="cc" data-a="nav" data-x="lang"><i class="ti ti-language"></i>${T("language")}</div></div>
-  <div class="mut" style="margin:18px 0 8px">${T("social")}</div>
-  <div class="cg">${LINKS.map(l=>`<a class="lk" href="${l[2]}" target="_blank" rel="noopener"><i class="ti ${l[0]}"></i>${l[1]}</a>`).join("")}</div>`;
+ if(v==="more")return morePage();
  if(v==="search")return `<input id="si" value="${esc(q)}" placeholder="${esc(T("searchPh2"))}" autocomplete="off"><div id="sr" style="margin-top:8px"></div>`;
  if(v==="notif")return `<h3>${T("notifTitle")}</h3>`+(notices.map(n=>`<div class="nt"><i class="ti ti-bell" style="color:#3b82f6;font-size:20px"></i><div><b>${esc(n.title)}</b><div class="mut">${esc(n.body)}</div></div></div>`).join("")||empty(T("notifNone")));
  if(v==="admin")return user?adminPage():loginPage();
@@ -302,13 +338,16 @@ function lists(){
  if($("bll"))$("bll").innerHTML=dl(banners,b=>b.title,"banners");
  if($("nl"))$("nl").innerHTML=dl(notices,n=>n.title,"notices");
 }
+function fillSocial(){
+ SOC.forEach(s=>{const e=$("s_"+s[2]);if(e&&document.activeElement!==e)e.value=social[s[2]]||""});
+}
 function formMode(){
  if(!$("ft"))return;
  $("ft").textContent=editId?"دەستکاریکردنی ئەپ":"زیادکردنی ئەپ";
  $("sv").textContent=editId?"هەڵگرتنی گۆڕانکاری":"زیادکردن";
  $("cx").style.display=editId?"inline-block":"none";
 }
-function resetForm(){editId=null;["n","d","ver","size","i","cv","sh","l"].forEach(k=>$(k).value="");$("ae").textContent="";formMode()}
+function resetForm(){editId=null;["n","d","den","dar","ver","size","i","cv","sh","l"].forEach(k=>$(k).value="");$("ae").textContent="";formMode()}
 function results(){
  if(!$("sr"))return;
  const r=q?apps.filter(a=>(a.name||"").toLowerCase().includes(q.toLowerCase())):[];
@@ -327,11 +366,11 @@ function draw(){
  $("main").innerHTML=page();
  document.querySelectorAll("#nav .nb").forEach(n=>n.classList.toggle("on",n.dataset.x===v));
  const si=$("si");if(si)si.oninput=()=>{q=si.value;results()};
- results();lists();formMode();badge();
+ results();lists();fillSocial();formMode();badge();
  if(v==="home"){if(sl>=Math.max(1,banners.length))sl=0;go2(sl);carousel()}else clearInterval(tm);
 }
 function refresh(){
- if(v==="admin"){if(user){lists();badge()}}
+ if(v==="admin"){if(user){lists();fillSocial();badge()}}
  else if(v==="search"){results();badge()}
  else draw();
 }
@@ -346,6 +385,7 @@ onSnapshot(query(collection(db,"apps"),orderBy("created","desc")),s=>{apps=s.doc
 onSnapshot(query(collection(db,"notices"),orderBy("created","desc")),s=>{notices=s.docs.map(d=>({id:d.id,...d.data()}));refresh()});
 onSnapshot(query(collection(db,"banners"),orderBy("created","desc")),s=>{banners=s.docs.map(d=>({id:d.id,...d.data()}));refresh()});
 onSnapshot(collection(db,"ratings"),s=>{ratings=s.docs.map(d=>({id:d.id,...d.data()}));refresh()});
+onSnapshot(doc(db,"settings","social"),s=>{social=s.exists()?s.data():{};refresh()},()=>{});
 onAuthStateChanged(auth,u=>{
  if(!u){signInAnonymously(auth).catch(()=>{});return}
  uid=u.uid;user=u.isAnonymous?null:u;
@@ -376,7 +416,7 @@ document.addEventListener("click",async e=>{
  else if(a==="share"){
   const ap=apps.find(i=>i.id===x);if(!ap)return;
   const link=url(ap.link)||location.href.split("#")[0];
-  if(navigator.share){try{await navigator.share({title:ap.name,text:ap.desc,url:link})}catch{}}
+  if(navigator.share){try{await navigator.share({title:ap.name,text:dsc(ap),url:link})}catch{}}
   else{try{await navigator.clipboard.writeText(link);toast(T("copied"))}catch{prompt("Link:",link)}}
  }
  else if(a==="rate"){
@@ -390,6 +430,19 @@ document.addEventListener("click",async e=>{
   catch{$("le").textContent="ئیمەیڵ یان وشەی نهێنی هەڵەیە"}
  }
  else if(a==="logout"){await signOut(auth);go("home")}
+ else if(a==="savesoc"){
+  const out={};
+  for(const s of SOC){
+   let val=$("s_"+s[2]).value.trim();
+   if(val){
+    if(s[2]==="whatsapp"&&/^\+?[\d\s]{7,18}$/.test(val))val="https://wa.me/"+val.replace(/\D/g,"");
+    else if(!/^https?:\/\//i.test(val))val="https://"+val;
+   }
+   out[s[2]]=val;
+  }
+  try{await setDoc(doc(db,"settings","social"),out);$("se").textContent="";toast("هەڵگیرا")}
+  catch(err){$("se").textContent="ڕێگەپێنەدراو: "+err.message}
+ }
  else if(a==="fetchapp"){
   const m=($("asl").value.match(/id(\d+)/)||[])[1];
   if(!m){$("afe").textContent="لینکەکە دروست نییە";return}
@@ -401,6 +454,7 @@ document.addEventListener("click",async e=>{
    if(!r){$("afe").textContent="نەدۆزرایەوە";return}
    $("n").value=r.trackName||"";
    $("d").value=(r.description||"").slice(0,400);
+   $("den").value=(r.description||"").slice(0,400);
    $("ver").value=r.version||"";
    $("size").value=r.fileSizeBytes?Math.round(r.fileSizeBytes/1048576)+" MB":"";
    $("i").value=r.artworkUrl512||"";
@@ -416,7 +470,7 @@ document.addEventListener("click",async e=>{
  else if(a==="edit"){
   const ap=apps.find(i=>i.id===x);if(!ap)return;
   editId=x;
-  const m={n:"name",d:"desc",ver:"ver",size:"size",i:"icon",cv:"cover",sh:"shots",l:"link"};
+  const m={n:"name",d:"desc",den:"descEn",dar:"descAr",ver:"ver",size:"size",i:"icon",cv:"cover",sh:"shots",l:"link"};
   for(const k in m)$(k).value=ap[m[k]]||"";
   $("c").value=ap.cat;formMode();scrollTo({top:0,behavior:"smooth"});
  }
@@ -424,7 +478,7 @@ document.addEventListener("click",async e=>{
  else if(a==="addapp"){
   const name=$("n").value.trim();
   if(!name){$("ae").textContent="ناوی ئەپ بنووسە";return}
-  const data={name,cat:$("c").value,desc:$("d").value.trim(),ver:$("ver").value.trim(),size:$("size").value.trim(),
+  const data={name,cat:$("c").value,desc:$("d").value.trim(),descEn:$("den").value.trim(),descAr:$("dar").value.trim(),ver:$("ver").value.trim(),size:$("size").value.trim(),
    icon:$("i").value.trim(),cover:$("cv").value.trim(),shots:$("sh").value.trim(),link:$("l").value.trim()};
   try{
    if(editId)await updateDoc(doc(db,"apps",editId),{...data,upd:serverTimestamp()});
